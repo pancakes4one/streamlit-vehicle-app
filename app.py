@@ -13,13 +13,26 @@ st.dataframe(df)
 # Scatterplot
 df_filtered = df[df['price'] < 300000]
 
-st.header('Price vs. Odometer by Vehicle Type (Outliers Removed)')
+st.header('Price vs. Odometer by Vehicle Type')
+
+remove_outliers = st.checkbox('Exclude sale prices greater than 100,000)', value=True)
+
+if remove_outliers:
+    df_filtered = df[(df['price'] < 100000) & (df['odometer'].notna()) & (df['price'].notna())]
+else:
+    df_filtered = df[df['odometer'].notna() & df['price'].notna()]
+
 fig = px.scatter(df_filtered, x='odometer', y='price', color='type', height=600, width=600)
 st.write(fig)
 
 # Histogram
-st.header('How long are cars typically listed?')
-fig = px.histogram(df, x='days_listed', color='condition')
-st.write(fig)
+filter_long = st.checkbox('Exclude listings over 100 days', value=True)
 
-print(df.columns)
+if filter_long:
+    df_filtered = df[df['days_listed'] < 100]
+else:
+    df_filtered = df.copy()
+
+st.header('Days Listed Distibution')
+fig = px.histogram(df_filtered, x='days_listed', color='condition')
+st.plotly_chart(fig)
