@@ -11,14 +11,14 @@ st.header('Used Car Advertisement Data Set')
 st.dataframe(df)
 
 # Scatterplot
-df_filtered = df[df['price'] < 300000]
+df_filtered = df[df['price'] < 80000]
 
 st.header('Price vs. Odometer by Vehicle Type')
 
-remove_outliers = st.checkbox('Exclude sale prices greater than 100,000)', value=True)
+remove_outliers = st.checkbox('Exclude sale prices greater than 80,000)', value=True)
 
 if remove_outliers:
-    df_filtered = df[(df['price'] < 100000) & (df['odometer'].notna()) & (df['price'].notna())]
+    df_filtered = df[(df['price'] < 80000) & (df['odometer'].notna()) & (df['price'].notna())]
 else:
     df_filtered = df[df['odometer'].notna() & df['price'].notna()]
 
