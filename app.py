@@ -8,7 +8,9 @@ df['manufacturer'] = df['model'].apply(lambda x: x.split()[0])
 
 df['price'] = pd.to_numeric(df['price'], errors='coerce')
 df['odometer'] = pd.to_numeric(df['odometer'], errors='coerce')
-df = df[df['price'].notna() & df['odometer'].notna()]
+df['days_listed'] = pd.to_numeric(df['days_listed'], errors='coerce')
+
+df = df[df['price'].notna() & df['odometer'].notna() & df['days_listed'].notna()]
 
 st.header('Used Car Advertisement Data Set')
 st.dataframe(df)
@@ -36,6 +38,6 @@ if filter_long:
 else:
     df_filtered = df.copy()
 
-st.header('Days Listed Distibution')
+st.header('Days Listed Distribution')
 fig = px.histogram(df_filtered, x='days_listed', color='condition')
 st.plotly_chart(fig)
