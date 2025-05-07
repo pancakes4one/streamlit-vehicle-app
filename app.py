@@ -13,7 +13,7 @@ df['days_listed'] = pd.to_numeric(df['days_listed'], errors='coerce')
 df = df[df['price'].notna() & df['odometer'].notna() & df['days_listed'].notna()]
 
 st.header('Used Car Advertisement Data Set')
-st.dataframe(df)
+# st.dataframe(df)
 
 # Scatterplot
 df_filtered = df[df['price'] < 80000]
